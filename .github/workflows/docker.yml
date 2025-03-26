@@ -40,7 +40,6 @@ jobs:
         uses: docker/build-push-action@v6
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          context: ./base_image
           file: ./base_image/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
