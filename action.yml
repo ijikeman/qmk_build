@@ -1,0 +1,32 @@
+name: "Qmk Firmware Build Action"
+description: "Building qmk firmware"
+inputs:
+  qmk_firmware_version:
+    description: 'QMK Firmware version'
+    required: false
+  keyboard:
+    description: 'Keyboard name'
+    required: true
+  rev:
+    description: 'Keyboard revision name'
+    required: true
+  keymap:
+    description: 'Keymap name'
+    required: true
+
+outputs:
+  hex_file:
+    description: 'Compiled firmeware file'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    qmk_firmware_version: ${{ inputs.qmk_firmware_version || 'latest' }}
+    keyboard: ${{ inputs.keyboard }}
+    rev: ${{ inputs.rev }}
+    keymap: ${{ inputs.keymap }}
+
+branding:
+  icon: "mic"
+  color: "blue"
