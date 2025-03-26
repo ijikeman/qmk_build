@@ -23,10 +23,15 @@ echo "::endgroup::"
 
 # Copy keyboard files from workspace
 echo "::group::Copying keyboard files from workspace"
-rm -rf keyboards/$keyboard
-cp -r "$GITHUB_WORKSPACE/$keyboard" "keyboards/$keyboard"
+if [[ -z "$keyboard" ]]; then
+    echo "::error::Missing required input 'keyboard'"
+    exit 1
+else
+    rm -rf keyboards/$keyboard
+    cp -r "$GITHUB_WORKSPACE/$keyboard" "keyboards/$keyboard"
 echo "::endgroup::"
 
+# Compile firmware
 echo "::group::Compiling firmware"
 qmk compile -kb "$keyboard/$rev" -km "$keymap"
 echo "::endgroup::"
