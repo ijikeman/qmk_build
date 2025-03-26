@@ -19,8 +19,6 @@ outputs:
     description: 'Compiled firmeware file'
 
 runs:
-  using: 'composite'
-  steps:
   using: 'docker'
   image: 'Dockerfile'
   env:
