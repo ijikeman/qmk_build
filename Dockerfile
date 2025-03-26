@@ -1,4 +1,4 @@
-FROM ghcr.io/ijikeman/qmk_build:${qmk_firmware_version}
+FROM ghcr.io/ijikeman/qmk_build:latest
 
 COPY entrypoint.sh /entrypoint.sh
 

@@ -21,28 +21,13 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Build Docker image
-      run: |
-        docker build -t custom_image \
-          --build-arg qmk_firmware_version=${qmk_firmware_version} \
-          .
-      env:
-        qmk_firmware_version: ${{ inputs.qmk_firmware_version || 'latest' }}
-        keybaord: ${{ inputs.keyboard }}
-        rev: ${{ inputs.rev }}
-        keymap: ${{ inputs.keymap }}
-      shell: bash
-
-#   using: 'docker'
-#   image: 'Dockerfile'
-#   env:
-#     qmk_firmware_version: ${{ inputs.qmk_firmware_version || 'latest' }}
-#     keyboard: ${{ inputs.keyboard }}
-#     rev: ${{ inputs.rev }}
-#     keymap: ${{ inputs.keymap }}
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    qmk_firmware_version: ${{ inputs.qmk_firmware_version || 'latest' }}
+    keyboard: ${{ inputs.keyboard }}
+    rev: ${{ inputs.rev }}
+    keymap: ${{ inputs.keymap }}
 
 branding:
   icon: "mic"
