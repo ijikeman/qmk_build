@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# qmk_firmwareをクローン
+# Update qmk_firmware repository
 echo "::group::Cloning QMK firmware ($qmk_firmware_version)"
 cd /qmk_firmware
 git fetch
@@ -16,13 +16,13 @@ echo "::group::Exec qmk_install.sh"
 sudo bash util/qmk_install.sh
 echo "::endgroup::"
 
-# 必要なパッケージをインストール
+# Install requirements
 echo "::group::Installing requirements"
 pip install -r requirements.txt
 echo "::endgroup::"
 
+# Copy keyboard files from workspace
 echo "::group::Copying keyboard files from workspace"
-# 呼び出し元の keyboard ディレクトリをコピー（呼び出し元に keyboards/$keyboard がある前提）
 rm -rf keyboards/$keyboard
 cp -r "$GITHUB_WORKSPACE/$keyboard" "keyboards/$keyboard"
 echo "::endgroup::"
@@ -31,9 +31,10 @@ echo "::group::Compiling firmware"
 qmk compile -kb "$keyboard/$rev" -km "$keymap"
 echo "::endgroup::"
 
-# 出力ファイル確認と保存
+# Find compiled .hex file
 output_file=$(find . -name "*.hex" | head -n 1)
 
+# Save compiled .hex file
 if [[ -f "$output_file" ]]; then
     echo "::group::Saving firmware"
     echo "Firmware compiled: $output_file"
