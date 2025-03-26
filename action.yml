@@ -22,10 +22,11 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    qmk_firmware_version: ${{ inputs.qmk_firmware_version || 'latest' }}
     keyboard: ${{ inputs.keyboard }}
     rev: ${{ inputs.rev }}
     keymap: ${{ inputs.keymap }}
+  build-args:
+    qmk_firmware_version ${{ inputs.qmk_firmware_version || 'latest' }}
 
 branding:
   icon: "mic"
