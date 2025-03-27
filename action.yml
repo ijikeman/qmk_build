@@ -20,8 +20,9 @@ outputs:
 
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/ijikeman/qmk_build:${{ inputs.qmk_firmware_version }}'
+  image: 'docker://ghcr.io/ijikeman/qmk_build:latest'
   env:
+    qmk_firmware_version: ${{ inputs.qmk_firmware_version }}
     keyboard: ${{ inputs.keyboard }}
     rev: ${{ inputs.rev }}
     keymap: ${{ inputs.keymap }}
