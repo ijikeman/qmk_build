@@ -21,3 +21,9 @@ RUN sudo bash util/qmk_install.sh
 
 # Install Python libraries for qmk compile 
 RUN pip install -r requirements.txt
+
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
