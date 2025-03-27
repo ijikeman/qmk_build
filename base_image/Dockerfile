@@ -1,6 +1,4 @@
 FROM ghcr.io/ijikeman/qmk_cli:latest
-ARG VERSION_QMK=1.1.6
-ARG VERSION_QMK_FIRMWARE=0.28.0
 
 RUN apt-get update && apt-get install -y \
     # for exec qmk_install.sh

@@ -36,6 +36,10 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      - name: Load variables from .env
+        run: |
+          cat ./base_image/.env >> $GITHUB_ENV
+
       - name: Build and Push to Registries
         uses: docker/build-push-action@v6
         if: startsWith(github.ref, 'refs/tags/')
@@ -45,6 +49,9 @@ jobs:
           context: ./base_image
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
+          build-args: |
+            VERSION_QMK=${{ env.VERSION_QMK }}
+            VERSION_QMK_FIRMWARE=${{ env.VERSION_QMK_FIRMWARE }}
           tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:${{ github.ref_name }}

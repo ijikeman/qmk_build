@@ -1,15 +1,19 @@
 #!/bin/bash
 
 # Clone QMK repository
-echo "::group::Clone QMK repository"
-qmk setup -y -b ${qmk_firmware_version} -H /qmk_firmware
-echo "::endgroup::"
+# もし$qmk_firmware_versionが'latest'でなければ、qmk_firmware.gitを再取得してセットアップする
+if [[ "$qmk_firmware_version" != "latest" ]]; then
+    echo "::group::Clone QMK repository"
+    rm -rf /qmk_firmware
+    qmk setup -y -b ${qmk_firmware_version} -H /qmk_firmware
+    echo "::endgroup::"
 
-# Install compile packages
-echo "::group::Install compile packages"
-cd /qmk_firmware/
-bash util/qmk_install.sh
-echo "::endgroup::"
+    # Install compile packages
+    echo "::group::Install compile packages"
+    cd /qmk_firmware/
+    bash util/qmk_install.sh
+    echo "::endgroup::"
+fi
 
 # Copy keyboard files from workspace
 echo "::group::Copying keyboard files from workspace"
