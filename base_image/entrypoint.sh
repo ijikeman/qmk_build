@@ -10,19 +10,12 @@ echo "::group::Install compile packages"
 bash /qmk_firmware/util/qmk_install.sh
 echo "::endgroup::"
 
-echo "::group::Debig"
-ls -al "$GITHUB_WORKSPACE/keyboards/"
-echo "::endgroup::"
-
 # Copy keyboard files from workspace
 echo "::group::Copying keyboard files from workspace"
-if [[ -z "keyboards/${keyboard}" ]]; then
-    echo "::error::Missing required input 'keyboard'"
-    exit 1
-else
-    rm -rf /qmk_firmware/keyboards
-    cp -Rp "${GITHUB_WORKSPACE}/keyboards" "/qmk_firmware/"
+if [[ -d "/qmk_firmware/keyboards/${keyboard}" ]]; then
+    rm -rf /qmk_firmware/keyboards/${keyboard}
 fi
+cp -Rp "${GITHUB_WORKSPACE}/keyboards/${keyboards}" "/qmk_firmware/keyboards/"
 echo "::endgroup::"
 
 # Compile firmware
@@ -31,7 +24,7 @@ qmk compile -kb "${keyboard}/${rev}" -km "${keymap}"
 echo "::endgroup::"
 
 # Find compiled .hex file
-output_file=$(find . -maxdepth 1 -name "*.hex" | head -n 1)
+output_file=$(find /qmk_firmware -maxdepth 1 -name "*.hex" | head -n 1)
 
 # Save compiled .hex file
 if [[ -f "$output_file" ]]; then
