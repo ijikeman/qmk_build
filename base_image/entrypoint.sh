@@ -10,12 +10,16 @@ echo "::group::Install compile packages"
 bash /qmk_firmware/util/qmk_install.sh
 echo "::endgroup::"
 
+echo "::group::Debig"
+ls -al "$GITHUB_WORKSPACE/keyboards/"
+echo "::endgroup::"
+
 # Copy keyboard files from workspace
 echo "::group::Copying keyboard files from workspace"
-if [[ -d "/qmk_firmware/keyboards/${keyboard}" ]]; then
-    rm -rf /qmk_firmware/keyboards/${keyboard}
+if [[ -d "keyboards/${keyboard}" ]]; then
+    rm -rf /qmk_firmware/keyboards
 fi
-cp -Rp "${GITHUB_WORKSPACE}/keyboards/${keyboards}" "/qmk_firmware/keyboards/"
+cp -Rp "${GITHUB_WORKSPACE}/keyboards" "/qmk_firmware/"
 echo "::endgroup::"
 
 # Compile firmware
