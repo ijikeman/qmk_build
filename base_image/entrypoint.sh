@@ -11,7 +11,7 @@ bash /qmk_firmware/util/qmk_install.sh
 echo "::endgroup::"
 
 echo "::group::Debig"
-ls -al "$GITHUB_WORKSPACE/"
+ls -al "$GITHUB_WORKSPACE/keyboards/"
 echo "::endgroup::"
 
 # Copy keyboard files from workspace
@@ -20,8 +20,8 @@ if [[ -z "keyboards/${keyboard}" ]]; then
     echo "::error::Missing required input 'keyboard'"
     exit 1
 else
-    rm -rf keyboards/${keyboard}
-    cp -r "$GITHUB_WORKSPACE/keyboards/${keyboard}" "keyboards/${keyboard}"
+    rm -rf /qmk_firmware/keyboards
+    cp -Rp "${GITHUB_WORKSPACE}/keyboards" "/qmk_firmware/"
 fi
 echo "::endgroup::"
 
