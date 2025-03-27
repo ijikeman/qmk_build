@@ -1,5 +1,8 @@
 FROM ghcr.io/ijikeman/qmk_cli:latest
 
+ARG VERSION_QMK
+ARG VERSION_QMK_FIRMWARE
+
 RUN apt-get update && apt-get install -y \
     # for exec qmk_install.sh
     sudo \
