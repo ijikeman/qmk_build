@@ -7,6 +7,7 @@ echo "::endgroup::"
 
 # Install compile packages
 echo "::group::Install compile packages"
+sed -i -e 's/pip install --user/pip install/g' /qmk_firmware/util/install/*.sh
 bash /qmk_firmware/util/qmk_install.sh
 echo "::endgroup::"
 
