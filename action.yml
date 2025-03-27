@@ -20,7 +20,7 @@ outputs:
 
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'docker://ghcr.io/ijikeman/qmk_build:latest'
   env:
     qmk_firmware_version: ${{ inputs.qmk_firmware_version || 'latest' }}
     keyboard: ${{ inputs.keyboard }}
