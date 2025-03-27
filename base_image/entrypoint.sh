@@ -7,7 +7,6 @@ echo "::endgroup::"
 
 # Install compile packages
 echo "::group::Install compile packages"
-sed -i -e 's/pip install --user/pip install/g' /qmk_firmware/util/install/*.sh
 bash /qmk_firmware/util/qmk_install.sh
 echo "::endgroup::"
 
@@ -19,6 +18,7 @@ if [[ -z "keyboards/${keyboard}" ]]; then
 else
     rm -rf keyboards/${keyboard}
     cp -r "$GITHUB_WORKSPACE/keyboards/${keyboard}" "keyboards/${keyboard}"
+fi
 echo "::endgroup::"
 
 # Compile firmware
