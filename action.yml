@@ -22,7 +22,7 @@ runs:
   using: 'docker'
   image: 'docker://ghcr.io/ijikeman/qmk_build:latest'
   env:
-    qmk_firmware_version: ${{ inputs.qmk_firmware_version }}
+    qmk_firmware_version: ${{ inputs.qmk_firmware_version | 'latest' }}
     keyboard: ${{ inputs.keyboard }}
     rev: ${{ inputs.rev }}
     keymap: ${{ inputs.keymap }}
