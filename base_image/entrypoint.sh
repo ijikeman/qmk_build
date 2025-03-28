@@ -1,32 +1,25 @@
 #!/bin/bash
+WORKDIR='/qmk_firmware/'
 
 # Clone QMK repository
 # もし$qmk_firmware_versionが'latest'でなければ、qmk_firmware.gitを再取得してセットアップする
 if [ "$qmk_firmware_version" != "latest" ]; then
     echo "::group::Clone QMK repository"
-    rm -rf /qmk_firmware
-    qmk setup -y -b ${qmk_firmware_version} -H /qmk_firmware
+    rm -rf ${WORKDIR}
+    qmk setup -y -b ${qmk_firmware_version} -H ${WORKDIR}
     echo "::endgroup::"
 
     # Install compile packages
     echo "::group::Install compile packages"
-    cd /qmk_firmware
+    cd ${WORKDIR}
     bash util/qmk_install.sh
     echo "::endgroup::"
 fi
 
-echo "::group::Debug"
-# Copy keyboard files from workspace
-echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
-ls -al $GITHUB_WORKSPACE/
-ls -al $GITHUB_WORKSPACE/keyboards
-echo "keyboard?: $GITHUB_WORKSPACE/keyboards/${keyboard}"
-echo "::endgroup::"
-
-if [ -d "$GITHUB_WORKSPACE/keyboards/${keyboard}" ]; then
-    echo "::group::Replacing '/qmk_firmware/keyboards/${keyboard}' from workspace"
-    rm -rf /qmk_firmware/keyboards/${keyboard}
-    cp -Rp "$GITHUB_WORKSPACE/keyboards/${keyboard}" "/qmk_firmware/keyboards/"
+if [ -d "${GITHUB_WORKSPACE}/keyboards/${keyboard}" ]; then
+    echo "::group::Replacing '${WORKDIR}keyboards/${keyboard}' from workspace"
+    rm -rf ${WORKDIR}keyboards/${keyboard}
+    cp -Rp "${GITHUB_WORKSPACE}/keyboards/${keyboard}" "${WORKDIR}keyboards/"
     echo "::endgroup::"
 fi
 
@@ -36,14 +29,14 @@ qmk compile -kb "${keyboard}/${rev}" -km "${keymap}"
 echo "::endgroup::"
 
 # Find compiled .hex file
-output_file=$(find /qmk_firmware -maxdepth 1 -name "${keyboard}*.hex" | head -n 1)
+output_file=$(find ${WORKDIR} -maxdepth 1 -name "${keyboard}*.hex" | head -n 1)
 
 # Save compiled .hex file
 if [ -f "$output_file" ]; then
     echo "::group::Saving firmware"
     echo "Firmware compiled: $output_file"
-    mkdir -p "$GITHUB_WORKSPACE/output"
-    cp "$output_file" "$GITHUB_WORKSPACE/output/"
+    mkdir -p "${GITHUB_WORKSPACE}/output"
+    cp "$output_file" "${GITHUB_WORKSPACE}/output/"
     echo "::endgroup::"
 else
     echo "::error::Failed to find compiled .hex file"
