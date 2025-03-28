@@ -19,7 +19,7 @@ GitHub Action to build keyboard firmware using QMK Firmware. Automatically repla
 | `qmk_firmware_version`  | Specify QMK Firmware version if you want to use a different version than the default. **Optional**.<br>**Note:** Specifying this parameter will rebuild the build environment and increase the execution time. It's recommended to leave this parameter unset. | No |
 | `keyboard`              | Keyboard name (`qmk_firmware/keyboards/${keyboard}`). Used by `qmk compile`.                                             | Yes      |
 | `rev`                   | Revision name (`qmk_firmware/keyboards/${keyboard}/${rev}`). Used by `qmk compile`.                                      | Yes      |
-| `keymap`                | Keymap name (`qmk_firmware/keyboards/${keyboard}/keymaps/${keymap}`). Used by `qmk compile`.                             | No       |
+| `keymap`                | Keymap name (`qmk_firmware/keyboards/${keyboard}/keymaps/${keymap}`). Used by `qmk compile`.                             | No(default)       |
 
 ---
 
@@ -91,7 +91,7 @@ QMKファームウェアを利用してキーボードのファームウェア�
 | `qmk_firmware_version`  | デフォルトのバージョンと異なるQMKファームウェアのバージョンを指定します。任意指定。<br>**注意：** ビルド環境の再構築を行うため、実行時間が長くなります。通常は指定しないことを推奨します。 | いいえ |
 | `keyboard`              | キーボード名 (`qmk_firmware/keyboards/${keyboard}`)。`qmk compile`時に指定します。                                      | はい     |
 | `rev`                   | リビジョン名 (`qmk_firmware/keyboards/${keyboard}/${rev}`)。`qmk compile`時に指定します。                                | はい     |
-| `keymap`                | キーマップ名 (`qmk_firmware/keyboards/${keyboard}/keymaps/${keymap}`)。`qmk compile`時に指定します。                     | いいえ   |
+| `keymap`                | キーマップ名 (`qmk_firmware/keyboards/${keyboard}/keymaps/${keymap}`)。`qmk compile`時に指定します。                     | いいえ(default)   |
 
 ---
 
