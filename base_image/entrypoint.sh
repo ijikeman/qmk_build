@@ -2,7 +2,7 @@
 
 # Clone QMK repository
 # もし$qmk_firmware_versionが'latest'でなければ、qmk_firmware.gitを再取得してセットアップする
-if [[ "$qmk_firmware_version" != "latest" ]]; then
+if [ "$qmk_firmware_version" != "latest" ]; then
     echo "::group::Clone QMK repository"
     rm -rf /qmk_firmware
     qmk setup -y -b ${qmk_firmware_version} -H /qmk_firmware
@@ -16,10 +16,10 @@ if [[ "$qmk_firmware_version" != "latest" ]]; then
 fi
 
 # Copy keyboard files from workspace
-if [[ -d "${GITHUB_WORKSPACE}/keyboards/${keyboard}" ]]; then
+if [ -d "$GITHUB_WORKSPACE/keyboards/${keyboard}" ]; then
     echo "::group::Replacing '/qmk_firmware/keyboards/${keyboard}' from workspace"
     rm -rf /qmk_firmware/keyboards/${keyboard}
-    cp -Rp "${GITHUB_WORKSPACE}/keyboards/${keyboard}" "/qmk_firmware/keyboards/"
+    cp -Rp "$GITHUB_WORKSPACE/keyboards/${keyboard}" "/qmk_firmware/keyboards/"
     echo "::endgroup::"
 fi
 
@@ -29,10 +29,10 @@ qmk compile -kb "${keyboard}/${rev}" -km "${keymap}"
 echo "::endgroup::"
 
 # Find compiled .hex file
-output_file=$(find . -maxdepth 1 -name "*.hex" | head -n 1)
+output_file=$(find . -maxdepth 1 -name "${keyboard}*.hex" | head -n 1)
 
 # Save compiled .hex file
-if [[ -f "$output_file" ]]; then
+if [ -f "$output_file" ]; then
     echo "::group::Saving firmware"
     echo "Firmware compiled: $output_file"
     mkdir -p "$GITHUB_WORKSPACE/output"

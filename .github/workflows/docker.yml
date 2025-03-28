@@ -47,7 +47,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           context: ./base_image
-          platforms: linux/amd64,linux/arm64
+#          platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           build-args: |
             VERSION_QMK=${{ env.VERSION_QMK }}
