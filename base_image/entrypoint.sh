@@ -15,7 +15,14 @@ if [ "$qmk_firmware_version" != "latest" ]; then
     echo "::endgroup::"
 fi
 
+echo "::group::Debug"
 # Copy keyboard files from workspace
+echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+ls -al $GITHUB_WORKSPACE/
+ls -al $GITHUB_WORKSPACE/keyboards
+echo "keyboard?: $GITHUB_WORKSPACE/keyboards/${keyboard}"
+echo "::endgroup::"
+
 if [ -d "$GITHUB_WORKSPACE/keyboards/${keyboard}" ]; then
     echo "::group::Replacing '/qmk_firmware/keyboards/${keyboard}' from workspace"
     rm -rf /qmk_firmware/keyboards/${keyboard}
@@ -29,7 +36,7 @@ qmk compile -kb "${keyboard}/${rev}" -km "${keymap}"
 echo "::endgroup::"
 
 # Find compiled .hex file
-output_file=$(find . -maxdepth 1 -name "${keyboard}*.hex" | head -n 1)
+output_file=$(find /qmk_firmware -maxdepth 1 -name "${keyboard}*.hex" | head -n 1)
 
 # Save compiled .hex file
 if [ -f "$output_file" ]; then
