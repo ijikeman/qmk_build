@@ -10,18 +10,18 @@ if [[ "$qmk_firmware_version" != "latest" ]]; then
 
     # Install compile packages
     echo "::group::Install compile packages"
-    cd /qmk_firmware/
+    cd /qmk_firmware
     bash util/qmk_install.sh
     echo "::endgroup::"
 fi
 
 # Copy keyboard files from workspace
-echo "::group::Copying keyboard files from workspace"
-if [[ -d "keyboards/${keyboard}" ]]; then
-    rm -rf keyboards/${keyboard}
+if [[ -d "${GITHUB_WORKSPACE}/keyboards/${keyboard}" ]]; then
+    echo "::group::Replacing '/qmk_firmware/keyboards/${keyboard}' from workspace"
+    rm -rf /qmk_firmware/keyboards/${keyboard}
+    cp -Rp "${GITHUB_WORKSPACE}/keyboards/${keyboard}" "/qmk_firmware/keyboards/"
+    echo "::endgroup::"
 fi
-cp -Rp "${GITHUB_WORKSPACE}/keyboards/${keyboard}" "keyboards/"
-echo "::endgroup::"
 
 # Compile firmware
 echo "::group::Compiling firmware"

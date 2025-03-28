@@ -12,7 +12,7 @@ inputs:
     required: true
   keymap:
     description: 'Keymap name'
-    required: true
+    required: false
 
 outputs:
   hex_file:
@@ -25,7 +25,7 @@ runs:
     qmk_firmware_version: ${{ inputs.qmk_firmware_version || 'latest' }}
     keyboard: ${{ inputs.keyboard }}
     rev: ${{ inputs.rev }}
-    keymap: ${{ inputs.keymap }}
+    keymap: ${{ inputs.keymap || 'default' }}
 
 branding:
   icon: "mic"
